@@ -1,0 +1,26 @@
+import json
+
+# Load user_id.json
+with open('user_data.json', 'r') as file:
+    user_data = json.load(file)
+
+# Load sentence.json
+with open('shuffled_sentences.json', 'r') as file:
+    sentence_data = json.load(file)
+
+# Assuming both JSON files have a list of entries, you can combine them based on index.
+combined_data = []
+
+# If user_id and sentence are lists with the same length, you can pair them like this:
+for user_id, username, sentence, created_at in zip(user_data, sentence_data):
+    combined_data.append({
+        "user_id": user_id.get("user_id"),  # Get user_id from the user_data
+        "username": username.get("username"),  # Get username from the user_data
+        "sentence": sentence.get("sentence"),  # Get sentence from the sentence_data
+        "created_at": created_at.get("created_at")  # Get created_at from the sentence_data
+    })
+# Save the combined data into a new JSON file
+with open('combined_data.json', 'w') as file:
+    json.dump(combined_data, file, indent=4)
+
+print("Files have been combined successfully!")
